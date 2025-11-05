@@ -1,0 +1,98 @@
+<div class="container">
+  <h1>Premium Calculator</h1>
+
+  <form [formGroup]="premiumForm" (ngSubmit)="calculatePremium()">
+    <div class="form-group">
+      <label for="name">Name *</label>
+      <input 
+        id="name" 
+        type="text" 
+        formControlName="name"
+        [class.ng-invalid]="isFieldInvalid('name')"
+        placeholder="Enter your name">
+      <div class="error-message" *ngIf="isFieldInvalid('name')">
+        {{ getErrorMessage('name') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="ageNextBirthday">Age Next Birthday *</label>
+      <input 
+        id="ageNextBirthday" 
+        type="number" 
+        formControlName="ageNextBirthday"
+        [class.ng-invalid]="isFieldInvalid('ageNextBirthday')"
+        placeholder="Enter age">
+      <div class="error-message" *ngIf="isFieldInvalid('ageNextBirthday')">
+        {{ getErrorMessage('ageNextBirthday') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="dateOfBirth">Date of Birth (mm/YYYY) *</label>
+      <input 
+        id="dateOfBirth" 
+        type="text" 
+        formControlName="dateOfBirth"
+        [class.ng-invalid]="isFieldInvalid('dateOfBirth')"
+        placeholder="e.g., 01/1990">
+      <div class="error-message" *ngIf="isFieldInvalid('dateOfBirth')">
+        {{ getErrorMessage('dateOfBirth') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="usualOccupation">Usual Occupation *</label>
+      <select 
+        id="usualOccupation" 
+        formControlName="usualOccupation"
+        [class.ng-invalid]="isFieldInvalid('usualOccupation')">
+        <option value="">Select an occupation</option>
+        <option *ngFor="let occupation of occupations" [value]="occupation.name">
+          {{ occupation.name }} ({{ occupation.rating }})
+        </option>
+      </select>
+      <div class="error-message" *ngIf="isFieldInvalid('usualOccupation')">
+        {{ getErrorMessage('usualOccupation') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="deathSumInsured">Death – Sum Insured *</label>
+      <input 
+        id="deathSumInsured" 
+        type="number" 
+        formControlName="deathSumInsured"
+        step="0.01"
+        [class.ng-invalid]="isFieldInvalid('deathSumInsured')"
+        placeholder="Enter sum insured amount">
+      <div class="error-message" *ngIf="isFieldInvalid('deathSumInsured')">
+        {{ getErrorMessage('deathSumInsured') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button 
+        type="submit" 
+        class="submit-button"
+        [disabled]="!premiumForm.valid || loading">
+        <span *ngIf="!loading">Calculate Premium</span>
+        <span *ngIf="loading">Calculating...</span>
+      </button>
+    </div>
+  </form>
+
+  <div class="premium-display" *ngIf="monthlyPremium !== null">
+    <h2>Monthly Premium</h2>
+    <div class="premium-amount">${{ monthlyPremium | number:'1.2-2' }}</div>
+    <div class="premium-details">
+      <p>Occupation Rating: {{ occupationRating }}</p>
+      <p>Rating Factor: {{ occupationRatingFactor }}</p>
+    </div>
+  </div>
+
+  <div class="info-box" *ngIf="monthlyPremium === null">
+    <p><strong>Note:</strong> All fields are mandatory. Fill in all the fields and click "Calculate Premium" to get your monthly premium.</p>
+  </div>
+</div>
+

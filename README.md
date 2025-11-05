@@ -43,12 +43,6 @@ First, get the API running:
 cd PremiumCalculator.API
 ```
 
-If you haven't already, restore the packages:
-```bash
-dotnet restore
-```
-
-Then run it. I've got a script that works around the OneDrive sync issues (if you're in OneDrive like me):
 ```powershell
 .\run.ps1
 ```
@@ -60,7 +54,6 @@ dotnet run --urls "http://localhost:4112"
 
 The API should start on port 4112. Once it's running, you can check out the Swagger docs at `http://localhost:4112/swagger` - pretty useful for testing the endpoints.
 
-**OneDrive issue?** If you get "Access is denied" errors when running `dotnet run`, it's probably OneDrive locking the .exe file. The `run.ps1` script uses `dotnet exec` instead which avoids that problem. Or just run PowerShell as admin, that usually works too.
 
 ### Frontend setup
 
@@ -110,4 +103,4 @@ Example response:
 - Form validation checks that age is between 1-120, date format is mm/YYYY, and sum insured is positive
 - CORS is set up to allow requests from the Angular app on port 4111
 
-That's about it. If you run into issues, check the TROUBLESHOOTING.md file in the API folder - I wrote that up after dealing with some annoying OneDrive problems.
+That's about it.
